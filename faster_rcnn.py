@@ -2,7 +2,7 @@ import torch
 from torch import nn
 from torchvision.models import vgg16
 from config import opt
-from torchvision.models import vgg16
+from torchvision.models import resnet34
 
 
 class FasterRCNN(nn.Module):

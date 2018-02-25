@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader
 from torchvision import transforms as T
 from voc import VOCDetection, VOC, Viz
 from transforms import *
-
+from target_transforms import *
 
 def data_loader(opt):
     # transform = None
@@ -17,6 +17,8 @@ def data_loader(opt):
                          Normalize(mean = voc.MEAN, std = voc.STD),
                          ToTensor(),
                          ])
+
+
     # Set data set
     trainset = VOCDetection(root='/home/ubuntu/data/VOCdevkit',
                             image_set=[(2007, 'trainval')],
