@@ -1,8 +1,8 @@
-from voc_dataset import VOCBboxDataset
+from libs.dataload.voc_dataset import VOCBboxDataset
 from util import resize_bbox, random_flip, flip_bbox
 import cv2
 import numpy as np
-from config import opt
+from libs.configs.cfgs import opt
 from torchvision import transforms as tvtsf
 import torch
 

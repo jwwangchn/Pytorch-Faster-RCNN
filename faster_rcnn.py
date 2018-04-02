@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 from torchvision.models import vgg16
-from config import opt
+from libs.configs.cfgs import opt
 from torchvision.models import resnet34
 
 

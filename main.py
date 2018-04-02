@@ -1,8 +1,5 @@
-import torch
 from torch.utils.data import DataLoader
-from torchvision import transforms as T
-import cv2
-from voc import VOCDetection, VOC, Viz
+from libs.dataload.voc import VOCDetection
 from transforms import *
 
 transform = Compose([Resize(min_size=600, max_size=1000),  # Resize image and bboxes

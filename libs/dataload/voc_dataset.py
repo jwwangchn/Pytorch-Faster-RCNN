@@ -1,8 +1,9 @@
+# -*- coding: utf-8 -*-
+from __future__ import division, print_function, absolute_import
 import os
+
 import xml.etree.ElementTree as ET
-
 import numpy as np
-
 from util import read_image
 
 

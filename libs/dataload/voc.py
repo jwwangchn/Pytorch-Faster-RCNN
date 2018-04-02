@@ -92,8 +92,6 @@ class ParseAnnotation():
 
         return np.array(bboxes), np.array(labels)
 
-
-
 class VOCDetection(data.Dataset):
     def __init__(self, root, image_set, transforms=None, target_transforms=None):
         self.root = root
