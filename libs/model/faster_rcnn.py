@@ -20,13 +20,15 @@ class FasterRCNN(nn.Module):
 
         # 特征提取层
         h = self.extractor(x)
+
         # RPN 层
-        rpn_loss, rpn_score, rois, roi_indices, anchor = self.rpn(h,
-                                                                  img_size,
-                                                                  scale)
+        # rpn_loss, rpn_score, rois, roi_indices, anchor = self.rpn(h,
+        #                                                           img_size,
+        #                                                           scale)
+
         # 分类层
-        roi_cls_locs, roi_scores = self.head(h,
-                                             rois,
-                                             roi_indices)
-        return roi_cls_locs, roi_scores, rois, roi_indices
+        # roi_cls_locs, roi_scores = self.head(h,
+        #                                      rois,
+        #                                      roi_indices)
+        # return roi_cls_locs, roi_scores, rois, roi_indices
 

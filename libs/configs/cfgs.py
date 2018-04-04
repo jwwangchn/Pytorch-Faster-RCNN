@@ -17,3 +17,7 @@ TEST_NUM_WORKS = 0
 SHUFFLE = False
 # batch size
 BATCH_SIZE = 1
+
+# VGG16
+VGG16_LOAD_PATH = None
+VGG16_USE_DROP = False

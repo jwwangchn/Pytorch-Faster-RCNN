@@ -23,4 +23,5 @@ class ProposalCreator:
                  anchor,
                  img_size,
                  scale = 1.0):
+        pass
 
