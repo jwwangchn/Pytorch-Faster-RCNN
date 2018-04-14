@@ -6,6 +6,9 @@ from libs.rpn import rpn_tools
 
 
 class ProposalCreator:
+    """
+    Proposal Layer
+    """
     def __init__(self,
                  parent_model,
                  nms_thresh = 0.7,
@@ -32,9 +35,15 @@ class ProposalCreator:
 
 
 class AnchorTargetCreator():
+    """
+    Anchor Target Layer
+    """
     pass
 
 class ProposalTargetCreator():
+    """
+    Proposal Target Layer
+    """
     pass
 
 class RegionProposalNetwork(nn.Module):
