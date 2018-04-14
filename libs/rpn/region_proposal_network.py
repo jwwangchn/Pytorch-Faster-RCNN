@@ -34,6 +34,20 @@ class ProposalCreator:
             n_post_nms = self.n_test_post_nms
 
 
+        # convert anchor into proposal via bbox transform
+        roi = rpn_tools.loc2bbox(anchor, loc)
+
+        # clip predicted boxes to image
+        roi[:, slice(0, 4, 2)] = np.clip(roi[:, slice(0, 4, 2)],
+                                         0,
+                                         img_size[0])
+        roi[:, slice(1, 4, 2)] = np.clip(roi[:, slice(1, 4, 2)],
+                                         0,
+                                         img_size[1])
+
+        # remove predicted boxes with either
+
+
 class AnchorTargetCreator():
     """
     Anchor Target Layer

@@ -32,5 +32,70 @@ def generate_anchor_base(base_size = 16,
             anchor_base[index, 3] = px + w / 2.
     return anchor_base
 
+def bbox2loc(src_bbox, dst_bbox):
+    """
+
+    :param src_bbox: p_{ymin}, p_{xmin}, p_{ymax}, p_{xmax} (Prediction)
+    :param dst_bbox: g_{ymin}, g_{xmin}, g_{ymax}, g_{xmax} (Ground Truth)
+    :return:
+    """
+    height = src_bbox[:, 2] - src_bbox[:, 0]
+    width = src_bbox[:, 3] - src_bbox[:, 1]
+    ctr_y = src_bbox[:, 0] + height / 2.0
+    ctr_x = src_bbox[:, 1] + width / 2.0
+
+    base_height = dst_bbox[:, 2] - dst_bbox[:, 0]
+    base_width = dst_bbox[:, 3] - dst_bbox[:, 1]
+    base_ctr_y = dst_bbox[:, 0] + base_height / 2.0
+    base_ctr_x = dst_bbox[:, 3] + width / 2.0
+
+    eps = np.finfo(height.dtype).eps
+    height = np.maximum(height, eps)
+    width = np.maximum(width, eps)
+
+    dy = (base_ctr_y - ctr_y) / height
+    dx = (base_ctr_x - ctr_x) / width
+    dh = np.log(base_height / height)
+    dw = np.log(base_width / width)
+
+    loc = np.vstack((dy, dx, dh, dw)).transpose()
+    return loc
+
+def loc2bbox(src_bbox, loc):
+    """
+
+    :param src_bbox: p_{ymin}, p_{xmin}, p_{ymax}, p_{xmax}
+    :param loc: t_y, t_x, t_h, t_w
+    :return:
+    """
+    if src_bbox.shape[0] == 0:
+        return np.zeros((0, 4), dtype = loc.dtype)
+
+    src_bbox = src_bbox.astype(src_bbox.dtype, copy = False)
+
+    src_height = src_bbox[:, 2] - src_bbox[:, 0]
+    src_width = src_bbox[:, 3] - src_bbox[:, 1]
+    src_ctr_y = src_bbox[:, 0] + src_height / 2.0
+    src_ctr_x = src_bbox[:, 1] + src_width / 2.0
+
+    dy = loc[:, 0::4]
+    dx = loc[:, 1::4]
+    dh = loc[:, 2::4]
+    dw = loc[:, 3::4]
+
+    ctr_y = dy * src_height[:, np.newaxis] + src_ctr_y[:, np.newaxis]
+    ctr_x = dx * src_width[:, np.newaxis] + src_ctr_x[:, np.newaxis]
+    h = np.exp(dh) * src_height[:, np.newaxis]
+    w = np.exp(dw) * src_width[:, np.newaxis]
+
+    dst_bbox = np.zeros(loc.shape, dtype = loc.dtype)
+    dst_bbox[:, 0::4] = ctr_y - 0.5 * h
+    dst_bbox[:, 1::4] = ctr_x - 0.5 * w
+    dst_bbox[:, 2::4] = ctr_y + 0.5 * h
+    dst_bbox[:, 3::4] = ctr_x + 0.5 * w
+
+    return dst_bbox
+
+
 if __name__ == '__main__':
     print(generate_anchor_base())
